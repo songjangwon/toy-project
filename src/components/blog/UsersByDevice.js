@@ -9,6 +9,7 @@ import {
   CardBody,
   CardFooter
 } from "shards-react";
+import * as todoApi from '../../services/post';
 
 import Chart from "../../utils/chart";
 
@@ -16,10 +17,29 @@ class UsersByDevice extends React.Component {
   constructor(props) {
     super(props);
 
+
+    this.temp = {
+        datasets: [
+          {
+            hoverBorderColor: "#ffffff",
+            data: [68.3, 24.2, 7.5],
+            backgroundColor: [
+              "rgba(0,123,255,0.9)",
+              "rgba(0,123,255,0.5)",
+              "rgba(0,123,255,0.3)"
+            ]
+          }
+        ],
+        labels: ["주식", "채권", "금"]
+      }
+      debugger;
     this.canvasRef = React.createRef();
   }
 
-  componentDidMount() {
+  async componentDidMount() {
+
+    const test = await this.handleNavigateClick();
+
     const chartConfig = {
       type: "pie",
       data: this.props.chartData,
@@ -42,7 +62,14 @@ class UsersByDevice extends React.Component {
         ...this.props.chartOptions
       }
     };
+    debugger;
+    const temp = []
+    for (let index = 0; index < test.data.length; index++) {
+        temp[index] = test.data[index][0]
 
+    }
+
+    chartConfig.data.labels = temp;
     new Chart(this.canvasRef.current, chartConfig);
   }
 
@@ -84,6 +111,14 @@ class UsersByDevice extends React.Component {
       </Card>
     );
   }
+  handleNavigateClick = async () => {
+    // await Promise.call([
+        return await todoApi.test()
+
+
+    // ]);
+
+}
 }
 
 UsersByDevice.propTypes = {
