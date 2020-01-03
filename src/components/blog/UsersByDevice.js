@@ -64,12 +64,23 @@ class UsersByDevice extends React.Component {
     };
     debugger;
     const temp = []
+    const possesRate = [];
+    const possesSum = [];
+    let totalSum = 0;
     for (let index = 0; index < test.data.length; index++) {
         temp[index] = test.data[index][0]
-
+        possesSum[index] = Number(test.data[index][1]) * Number(test.data[index][3]);
+        totalSum = Number(totalSum) + Number(possesSum[index]);
     }
 
+    for (let index = 0; index < possesSum.length; index++) {
+        possesRate[index] = Number(possesSum[index])/Number(totalSum)*100
+    }
+
+    debugger;
     chartConfig.data.labels = temp;
+    chartConfig.data.datasets[0].data = possesRate;
+
     new Chart(this.canvasRef.current, chartConfig);
   }
 
